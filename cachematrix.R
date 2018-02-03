@@ -11,8 +11,11 @@
 
 makeCacheMatrix <- function(x = matrix())
 {
+	
+	#inistialise inverse as NULL
 	inv <- NULL
 
+	#basic functions to operate on the matrix
 	set <- function(y)
 	{
 		x <<- y
@@ -35,24 +38,27 @@ makeCacheMatrix <- function(x = matrix())
 	}
 
 	# Added a small feauture where the cache of the matirx is directly computed upon the initialisation
-
 	thisList <- list(set = set, get = get, setInv = setInv, getInv = getInv)
-
+	#computes the inverse of this matrix 'x' and sets it automatically on initialisation
 	setInv(cacheInverse(thisList))
-
+	#return a list for further operations
 	thisList
 }
 
 cacheInverse <- function(x)
 {
+	#retrieves the inverse of matrix
 	inv <- x$getInv()
-
+	
+	#if inverse does not exist, compute the inverse
 	if(is.null(inv))
 	{
 		inv <- solve(x$get())
 		x$setInv(inv)
 		return(inv)
 	}
+	
+	#else print the cached inverse
 	print('Cached Inv: ')
 	inv
 }
